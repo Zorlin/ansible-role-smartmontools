@@ -65,7 +65,7 @@ MIT
 Author Information
 ------------------
 
-This role was created in 2020 by [Zorlin](https://github.com/Zorlin/).
+This role was created in 2020 by Benjamin Arntzen.
 
 This role uses examples and code from [geerlingguy.awx](https://github.com/geerlingguy/ansible-role-awx) which was written by Jeff Geerling.
 
