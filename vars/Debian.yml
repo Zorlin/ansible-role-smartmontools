@@ -1,5 +1,6 @@
 ---
 smartmontools_build_dependencies:
   - 'build-essential'
+  - automake
 smartmontools_systemd_dev_libraries:
   - libsystemd-dev
