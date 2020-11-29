@@ -1,3 +1,4 @@
 ---
 # defaults file for ansible-role-smartmontools
 smartmontools_install_from_backports: no
+smartmontools_src_location: "/usr/local/src/smartmontools"

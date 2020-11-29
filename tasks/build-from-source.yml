@@ -9,3 +9,10 @@
     name:
       "{{ smartmontools_build_dependencies }}"
     state: present
+
+# Download, build and install
+- name: Download smartmontools from Git
+  git:
+    repo: "https://github.com/smartmontools/smartmontools.git"
+    dest: "{{ smartmontools_src_location }}"
+    version: 'RELEASE_7_1'
