@@ -3,6 +3,12 @@
 - name: Include OS-specific variables.
   include_vars: "{{ ansible_os_family }}.yml"
 
+# Ensure there's no old version of smartmontools installed
+- name: Remove any old (packaged) versions of smartmontools
+  package:
+    name: smartmontools
+    state: absent
+
 # Install build dependencies
 - name: Install build dependencies
   package:
@@ -52,3 +58,9 @@
     chdir: "{{ smartmontools_src_location }}/smartmontools"
     creates: "{{ smartmontools_src_location }}/smartmontools/Makefile"
   when: ansible_os_family == 'RedHat' and smartmontools_install_selinux_stuff
+
+- name: Build and install smartmontools
+  command: "make && make install"
+  args:
+    chdir: "{{ smartmontools_src_location }}/smartmontools"
+    creates: "/usr/local/sbin/smartctl"
