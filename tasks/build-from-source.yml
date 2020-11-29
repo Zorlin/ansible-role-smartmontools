@@ -17,13 +17,13 @@
     state: present
 
 # If running on a CentOS 6 machine, install the SCL repo and devtoolset
-- name: Install centos-release-scl-rh
+- name: Install centos-release-scl-rh (special case for CentOS 6)
   package:
     name: centos-release-scl-rh
     state: present
   when: ansible_os_family == 'RedHat' and ansible_distribution_major_version|int <= 6
 
-- name: Install devtoolset-7 toolchain
+- name: Install devtoolset-7 toolchain (special case for CentOS 6)
   package:
     name: devtoolset-7-toolchain
     state: present
@@ -91,4 +91,4 @@
   args:
     chdir: "{{ smartmontools_src_location }}/smartmontools"
     creates: "/usr/local/sbin/smartctl"
-  when: not ansible_os_family == 'RedHat' and ansible_distribution_major_version|int <= 6
+  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version|int <= 6
