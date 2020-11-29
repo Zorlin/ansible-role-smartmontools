@@ -60,7 +60,7 @@
   when: ansible_os_family == 'RedHat' and smartmontools_install_selinux_stuff
 
 - name: Build and install smartmontools
-  command: "make && make install"
+  shell: "make && make install"
   args:
     chdir: "{{ smartmontools_src_location }}/smartmontools"
     creates: "/usr/local/sbin/smartctl"
