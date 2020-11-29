@@ -72,8 +72,8 @@
     creates: "{{ smartmontools_src_location }}/smartmontools/Makefile"
   when: ansible_os_family == 'RedHat' and ansible_distribution_major_version|int >= 7 and smartmontools_install_selinux_stuff
 
-- name: Run configure via SCL (with SELinux, special case for CentOS 6) 
-  shell: "scl enable devtoolset-7 -- ./configure --with-nvme-devicescan --with-selinux"
+- name: Run configure via SCL (with SELinux, special case for CentOS 6)
+  command: "scl enable devtoolset-7 -- ./configure --with-nvme-devicescan --with-selinux"
   args:
     chdir: "{{ smartmontools_src_location }}/smartmontools"
     creates: "{{ smartmontools_src_location }}/smartmontools/Makefile"
