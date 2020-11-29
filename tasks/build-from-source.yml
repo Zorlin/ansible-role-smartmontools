@@ -16,6 +16,19 @@
       "{{ smartmontools_build_dependencies }}"
     state: present
 
+# If running on a CentOS 6 machine, install the SCL repo and devtoolset
+- name: Install centos-release-scl-rh
+  package:
+    name: centos-release-scl-rh
+    state: present
+  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version|int <= 6
+
+- name: Install devtoolset-7 toolchain
+  package:
+    name: devtoolset-7-toolchain
+    state: present
+  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version|int <= 6
+
 # If running on a machine with systemd, install the development libraries
 - name: Install systemd development libraries
   package:
@@ -57,10 +70,25 @@
   args:
     chdir: "{{ smartmontools_src_location }}/smartmontools"
     creates: "{{ smartmontools_src_location }}/smartmontools/Makefile"
-  when: ansible_os_family == 'RedHat' and smartmontools_install_selinux_stuff
+  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version|int >= 7 and smartmontools_install_selinux_stuff
+
+- name: Run configure via SCL (with SELinux, special case for CentOS 6) 
+  shell: "scl enable devtoolset-7 -- ./configure --with-nvme-devicescan --with-selinux"
+  args:
+    chdir: "{{ smartmontools_src_location }}/smartmontools"
+    creates: "{{ smartmontools_src_location }}/smartmontools/Makefile"
+  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version|int <= 6 and smartmontools_install_selinux_stuff
 
 - name: Build and install smartmontools
   shell: "make && make install"
   args:
     chdir: "{{ smartmontools_src_location }}/smartmontools"
     creates: "/usr/local/sbin/smartctl"
+  when: not ansible_os_family == 'RedHat' and ansible_distribution_major_version|int <= 6
+
+- name: Build and install smartmontools via SCL (special case for CentOS 6)
+  shell: "scl enable devtoolset-7 -- make && make install"
+  args:
+    chdir: "{{ smartmontools_src_location }}/smartmontools"
+    creates: "/usr/local/sbin/smartctl"
+  when: not ansible_os_family == 'RedHat' and ansible_distribution_major_version|int <= 6
