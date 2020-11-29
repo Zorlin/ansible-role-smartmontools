@@ -1,2 +1,3 @@
 ---
 # defaults file for ansible-role-smartmontools
+smartmontools_install_from_backports: no

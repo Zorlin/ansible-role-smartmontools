@@ -1,2 +1,20 @@
 ---
 # tasks file for ansible-role-smartmontools
+
+# Attempt to install from packages first
+# Ubuntu and Debian
+- include_tasks: debian.yml
+  when: ansible_os_family == 'Debian'
+
+# CentOS and Red Hat
+- include_tasks: centos.yml
+  when: ansible_os_family == 'RedHat'
+
+# If that fails, we build and install from source
+- include_tasks: build-from-source.yml
+  when:
+    - ansible_distribution == 'Ubuntu' and ansible_distribution_version == '16.04'
+      or ansible_distribution == 'Ubuntu' and ansible_distribution_version == '18.04' and not smartmontools_install_from_backports
+      or ansible_distribution == 'Debian' and ansible_distribution_major_version|int <= 9
+      or ansible_distribution == 'Debian' and ansible_distribution_major_version|int >= 10 and not smartmontools_install_from_backports
+      or ansible_os_family == 'RedHat' and ansible_distribution_major_version in ['6', '8']
