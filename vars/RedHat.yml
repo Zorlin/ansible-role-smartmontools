@@ -3,3 +3,5 @@ smartmontools_build_dependencies:
   - '@Development tools'
 smartmontools_systemd_dev_libraries:
   - systemd-devel
+smartmontools_selinux_dev_libraries:
+  - libselinux-devel

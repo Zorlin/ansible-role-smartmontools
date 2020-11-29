@@ -14,9 +14,17 @@
 - name: Install systemd development libraries
   package:
     name:
-      "{{ smartmontools_systemd_dev_libraries }} "
+      "{{ smartmontools_systemd_dev_libraries }}"
     state: present
   when: ansible_service_mgr == 'systemd' and smartmontools_install_systemd_stuff
+
+# If running on a machine with SELinux, install the development libraries
+- name: Install SELinux development libraries
+  package:
+    name:
+      "{{ smartmontools_selinux_dev_libraries }}"
+    state: present
+  when: ansible_os_family == 'RedHat' and smartmontools_install_selinux_stuff
 
 # Download, configure, build and install
 - name: Download smartmontools from Git
@@ -31,8 +39,16 @@
     chdir: "{{ smartmontools_src_location }}/smartmontools"
     creates: "{{ smartmontools_src_location }}/smartmontools/configure"
 
-- name: Run configure
+- name: Run configure (without SELinux)
   command: "./configure --with-nvme-devicescan"
   args:
     chdir: "{{ smartmontools_src_location }}/smartmontools"
     creates: "{{ smartmontools_src_location }}/smartmontools/Makefile"
+  when: not ansible_os_family == 'RedHat' and smartmontools_install_selinux_stuff
+
+- name: Run configure (with SELinux)
+  command: "./configure --with-nvme-devicescan --with-selinux"
+  args:
+    chdir: "{{ smartmontools_src_location }}/smartmontools"
+    creates: "{{ smartmontools_src_location }}/smartmontools/Makefile"
+  when: ansible_os_family == 'RedHat' and smartmontools_install_selinux_stuff
