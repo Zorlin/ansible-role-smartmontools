@@ -36,3 +36,9 @@ Author Information
 ------------------
 
 An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+
+TODO
+----
+
+* Add a flag to always build from source
+* Investigate co-existing with smartmontools < 7
