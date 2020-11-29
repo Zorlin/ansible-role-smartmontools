@@ -84,7 +84,7 @@
   args:
     chdir: "{{ smartmontools_src_location }}/smartmontools"
     creates: "/usr/local/sbin/smartctl"
-  when: not ansible_os_family == 'RedHat' and ansible_distribution_major_version|int <= 6
+  when: not (ansible_os_family == 'RedHat' and ansible_distribution_major_version|int <= 6)
 
 - name: Build and install smartmontools via SCL (special case for CentOS 6)
   shell: "scl enable devtoolset-7 -- make && make install"
