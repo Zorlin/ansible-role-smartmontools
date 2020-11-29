@@ -10,7 +10,7 @@
       "{{ smartmontools_build_dependencies }}"
     state: present
 
-# Download, build and install
+# Download, configure, build and install
 - name: Download smartmontools from Git
   git:
     repo: "https://github.com/smartmontools/smartmontools.git"
@@ -22,3 +22,9 @@
   args:
     chdir: "{{ smartmontools_src_location }}/smartmontools"
     creates: "{{ smartmontools_src_location }}/smartmontools/configure"
+
+- name: Run configure
+  command: "./configure --with-nvme-devicescan"
+  args:
+    chdir: "{{ smartmontools_src_location }}/smartmontools"
+    creates: "{{ smartmontools_src_location }}/smartmontools/Makefile"
