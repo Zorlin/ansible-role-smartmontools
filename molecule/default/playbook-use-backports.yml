@@ -1,0 +1,16 @@
+---
+- name: Converge but use backports
+  hosts: all
+  become: true
+
+  vars:
+    smartmontools_install_from_backports: true
+
+  pre_tasks:
+    - include_tasks: environment-prep.yml
+
+  roles:
+    - role: geerlingguy.repo-epel
+      when: ansible_os_family == 'RedHat'
+    - geerlingguy.git
+    - zorlin.smartmontools
