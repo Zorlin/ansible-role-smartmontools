@@ -30,12 +30,12 @@ Role Variables
 
 Available variables are listed below, along with default values (see `defaults/main.yml`):
 
-    smartmontools_install_from_backports: false
+    smartmontools_install_from_backports: true
     smartmontools_install_systemd_stuff: true
     smartmontools_install_selinux_stuff: true
     smartmontools_src_location: "/usr/local/src/smartmontools"
 
-By default, this role will opt to build from source instead of installing from backports if a recent smartmontools is only available from backports. You can tell the role to install from backports when available by changing setting `smartmontools_install_from_backports` to `true`. **NOTE:** This role may default to installing from backports in the future.
+By default, this role will opt to install from backports rather than building from source if a recent smartmontools is available from backports. You can change this behaviour by changing setting `smartmontools_install_from_backports` to `false`. **NOTE:** This default may change in the future.
 
 Dependencies
 ------------

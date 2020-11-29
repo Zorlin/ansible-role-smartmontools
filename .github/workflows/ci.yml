@@ -57,11 +57,11 @@ jobs:
             playbook: converge.yml
           - distro: debian10
             playbook: converge.yml
-          # Test installing from backports
+          # Test not installing from backports
           - distro: ubuntu1804
-            playbook: playbook-use-backports.yml
+            playbook: playbook-no-use-backports.yml
           - distro: debian10
-            playbook: playbook-use-backports.yml
+            playbook: playbook-no-use-backports.yml
 
     steps:
       - name: Check out the codebase.
