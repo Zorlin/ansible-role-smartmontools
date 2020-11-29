@@ -12,9 +12,13 @@
     changed_when: false
 
   - name: Check if smartctl is at least version 7+
-    shell: "smartctl --version | grep 'smartmontools release 7.'"
+    shell: >
+      set -o pipefail && \
+        smartctl --version | grep 'smartmontools release 7.'
     register: smartctl_version_check
     changed_when: false
+    args:
+      executable: /bin/bash
 
   - name: Check the return code of smartctl install check
     assert:
