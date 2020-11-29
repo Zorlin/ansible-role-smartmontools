@@ -1,0 +1,3 @@
+---
+smartmontools_build_dependencies:
+  - 'build-essential'

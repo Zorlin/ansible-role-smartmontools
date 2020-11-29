@@ -1,0 +1,11 @@
+---
+# Install smartmontools from source
+- name: Include OS-specific variables.
+  include_vars: "{{ ansible_os_family }}.yml"
+
+# Install build dependencies
+- name: Install build dependencies
+  package:
+    name:
+      "{{ smartmontools_build_dependencies }}"
+    state: present

@@ -9,7 +9,7 @@
     - include_tasks: environment-prep.yml
 
   roles:
-    - zorlin.smartmontools
     - role: geerlingguy.repo-epel
       when: ansible_os_family == 'RedHat'
     - geerlingguy.git
+    - zorlin.smartmontools
