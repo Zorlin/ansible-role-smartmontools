@@ -10,6 +10,14 @@
       "{{ smartmontools_build_dependencies }}"
     state: present
 
+# If running on a machine with systemd, install the development libraries
+- name: Install systemd development libraries
+  package:
+    name:
+      "{{ smartmontools_systemd_dev_libraries }} "
+    state: present
+  when: ansible_service_mgr == 'systemd' and smartmontools_install_systemd_stuff
+
 # Download, configure, build and install
 - name: Download smartmontools from Git
   git:
