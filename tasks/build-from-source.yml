@@ -63,7 +63,7 @@
   args:
     chdir: "{{ smartmontools_src_location }}/smartmontools"
     creates: "{{ smartmontools_src_location }}/smartmontools/Makefile"
-  when: not ansible_os_family == 'RedHat' and smartmontools_install_selinux_stuff
+  when: not ansible_os_family == 'RedHat'
 
 - name: Run configure (with SELinux)
   command: "./configure --with-nvme-devicescan --with-selinux"
