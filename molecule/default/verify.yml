@@ -1,0 +1,23 @@
+---
+# This is an example playbook to execute Ansible tests.
+
+- name: Verify
+  hosts: all
+  gather_facts: false
+  tasks:
+
+  - name: Check if smartctl is installed
+    command: which smartctl
+    register: smartctl_installed
+    changed_when: false
+
+  - name: Check if smartctl is at least version 7+
+    shell: "smartctl --version | grep 'smartmontools release 7.'"
+    register: smartctl_version_check
+    changed_when: false
+
+  - name: Check the return code of smartctl install check
+    assert:
+      that:
+        - smartctl_installed.rc == 0
+        - smartctl_version_check.rc == 0
