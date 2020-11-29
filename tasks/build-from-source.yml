@@ -16,3 +16,9 @@
     repo: "https://github.com/smartmontools/smartmontools.git"
     dest: "{{ smartmontools_src_location }}"
     version: 'RELEASE_7_1'
+
+- name: Run autogen.sh
+  command: ./autogen.sh
+  args:
+    chdir: "{{ smartmontools_src_location }}/smartmontools"
+    creates: "{{ smartmontools_src_location }}/smartmontools/configure"
