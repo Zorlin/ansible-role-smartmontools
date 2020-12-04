@@ -41,8 +41,6 @@ jobs:
       matrix:
         include:
           # Test all distros we support
-          - distro: centos6
-            playbook: converge.yml
           - distro: centos7
             playbook: converge.yml
           - distro: centos8
