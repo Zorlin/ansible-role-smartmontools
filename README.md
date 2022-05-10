@@ -5,7 +5,7 @@ Ansible Role: Smartmontools
 
 This role automatically configures and installs a relatively recent (at least v7) version of smartmontools.
 
-While this software is available in most repositories, it's often outdated. Software such as [Scrutiny](https://github.com/AnalogJ/scrutiny) relies on having at least smartmontools v7 installed. This role aims to achieve that while being available for all platforms someone could reasonably want to run on.
+While smartmontools packages are available in most repositories, they're often outdated. Software such as [Scrutiny](https://github.com/AnalogJ/scrutiny) relies on having at least smartmontools v7 installed. This role aims to achieve that while being available for all platforms someone could reasonably want to run on.
 
 Currently this includes:
 
@@ -71,6 +71,5 @@ This role uses examples and code from [geerlingguy.awx](https://github.com/geerl
 
 TODOs
 -----
-
 * Add a flag to always build from source
 * Investigate co-existing with smartmontools < 7
