@@ -16,26 +16,13 @@
       "{{ smartmontools_build_dependencies }}"
     state: present
 
-# If running on a CentOS 6 machine, install the SCL repo and devtoolset
-- name: Install centos-release-scl-rh (special case for CentOS 6)
-  package:
-    name: centos-release-scl-rh
-    state: present
-  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version|int <= 6
-
-- name: Install devtoolset-7 toolchain (special case for CentOS 6)
-  package:
-    name: devtoolset-7-toolchain
-    state: present
-  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version|int <= 6
-
 # If running on a machine with systemd, install the development libraries
 - name: Install systemd development libraries
   package:
     name:
       "{{ smartmontools_systemd_dev_libraries }}"
     state: present
-  when: ansible_service_mgr == 'systemd' and smartmontools_install_systemd_stuff
+  when: ansible_service_mgr == 'systemd'
 
 # If running on a machine with SELinux, install the development libraries
 - name: Install SELinux development libraries
@@ -43,7 +30,7 @@
     name:
       "{{ smartmontools_selinux_dev_libraries }}"
     state: present
-  when: ansible_os_family == 'RedHat' and smartmontools_install_selinux_stuff
+  when: ansible_os_family == 'RedHat' and ansible_selinux is defined and ansible_selinux != False and ansible_selinux.status == 'enabled'
 
 # Download, configure, build and install
 - name: Download smartmontools from Git

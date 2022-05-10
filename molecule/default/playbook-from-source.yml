@@ -1,10 +1,10 @@
 ---
-- name: Converge but use backports
+- name: Converge but install from source
   hosts: all
   become: true
 
   vars:
-    smartmontools_install_from_backports: true
+    smartmontools_install_from_source: true
 
   pre_tasks:
     - include_tasks: environment-prep.yml

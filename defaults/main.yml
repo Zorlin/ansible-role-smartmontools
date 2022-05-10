@@ -1,6 +1,5 @@
 ---
 # defaults file for ansible-role-smartmontools
-smartmontools_install_from_backports: true
-smartmontools_install_systemd_stuff: true
-smartmontools_install_selinux_stuff: true
+smartmontools_install_from_source: false
+smartmontools_version: "RELEASE_7_3"
 smartmontools_src_location: "/usr/local/src/smartmontools"
