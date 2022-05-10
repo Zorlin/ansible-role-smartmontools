@@ -18,7 +18,7 @@
     default_release: "{{ ansible_distribution_release }}-backports"
   when:
     - ansible_distribution == 'Ubuntu' and ansible_distribution_version == '18.04' and not smartmontools_install_from_source
-      or ansible_distribution == 'Debian' and ansible_distribution_major_version|int = 10 and not smartmontools_install_from_source
+      or ansible_distribution == 'Debian' and ansible_distribution_major_version == '10' and not smartmontools_install_from_source
 
 - name: Install smartmontools package (from Ubuntu 20.04 and Debian 11 onwards)
   apt:
