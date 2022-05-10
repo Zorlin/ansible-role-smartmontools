@@ -25,5 +25,5 @@
     name: smartmontools
     state: present
   when:
-    - ansible_distribution == 'Ubuntu' and ansible_distribution_major_version|int >= '20' and not smartmontools_install_from_source
+    - ansible_distribution == 'Ubuntu' and ansible_distribution_major_version|int >= 20 and not smartmontools_install_from_source
       or ansible_distribution == 'Debian' and ansible_distribution_major_version|int >= 11 and not smartmontools_install_from_source

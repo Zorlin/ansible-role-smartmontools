@@ -37,7 +37,7 @@
   git:
     repo: "https://github.com/smartmontools/smartmontools.git"
     dest: "{{ smartmontools_src_location }}"
-    version: 'RELEASE_7_1'
+    version: '{{ smartmontools_version }}'
 
 - name: Run autogen.sh
   command: ./autogen.sh
@@ -57,14 +57,7 @@
   args:
     chdir: "{{ smartmontools_src_location }}/smartmontools"
     creates: "{{ smartmontools_src_location }}/smartmontools/Makefile"
-  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version|int >= 7 and smartmontools_install_selinux_stuff
-
-- name: Run configure via SCL (with SELinux, special case for CentOS 6)
-  command: "scl enable devtoolset-7 -- ./configure --with-nvme-devicescan --with-selinux"
-  args:
-    chdir: "{{ smartmontools_src_location }}/smartmontools"
-    creates: "{{ smartmontools_src_location }}/smartmontools/Makefile"
-  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version|int <= 6 and smartmontools_install_selinux_stuff
+  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version|int >= 7
 
 - name: Build and install smartmontools
   shell: "make && make install"
@@ -72,10 +65,3 @@
     chdir: "{{ smartmontools_src_location }}/smartmontools"
     creates: "/usr/local/sbin/smartctl"
   when: not (ansible_os_family == 'RedHat' and ansible_distribution_major_version|int <= 6)
-
-- name: Build and install smartmontools via SCL (special case for CentOS 6)
-  shell: "scl enable devtoolset-7 -- make && make install"
-  args:
-    chdir: "{{ smartmontools_src_location }}/smartmontools"
-    creates: "/usr/local/sbin/smartctl"
-  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version|int <= 6
